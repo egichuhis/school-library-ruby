@@ -35,14 +35,13 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **Add Users: Person, Teacher, Student**
+- **Add User Classes: Person, Teacher, Student**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
 ## 💻 Getting Started <a name="getting-started"></a>
-
 
 To get a local copy up and running, follow these steps.
 
@@ -72,7 +71,6 @@ To run the project, execute the following command:
 Start your interactive ruby shell `irb`:
 
 ## 👥 Authors <a name="authors"></a>
-
 
 👤 **Edwin Gichuhi**
 
