@@ -1,4 +1,3 @@
-ruby
 # Interface
 class Nameable
   def correct_name
