@@ -36,6 +36,7 @@
 ### Key Features <a name="key-features"></a>
 
 - **Add User Classes: Person, Teacher, Student**
+- **Decorate a class**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
