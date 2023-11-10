@@ -1,9 +1,5 @@
-# Interface
-class Nameable
-  def correct_name
-    raise NotImplementedError, 'This method must be implemented in the child class.'
-  end
-end
+require_relative 'nameable'
+require_relative 'base_decorator'
 
 # Person class inheriting from Nameable
 class Person < Nameable
@@ -33,28 +29,9 @@ class Person < Nameable
   end
 end
 
-# Base Decorator
-class BaseDecorator < Nameable
-  def initialize(nameable)
-    super()
-    @nameable = nameable
-  end
-
-  def correct_name
-    @nameable.correct_name
-  end
-end
-
-# CapitalizeDecorator
-class CapitalizeDecorator < BaseDecorator
-  def correct_name
-    super().capitalize
-  end
-end
-
-# TrimmerDecorator
-class TrimmerDecorator < BaseDecorator
-  def correct_name
-    super()[0..9]
-  end
-end
+person = Person.new('Maximilianus', 22)
+person.correct_name
+capitalized_person = CapitalizeDecorator.new(person)
+puts capitalized_person.correct_name
+capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
+puts capitalized_trimmed_person.correct_name
