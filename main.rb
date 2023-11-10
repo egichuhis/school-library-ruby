@@ -29,6 +29,18 @@ require_relative 'interfaces/nameable'
 # puts book.rentals.length # Should print 1
 # puts person.rentals.length # Should print 1
 
+# book = Book.new('Ruby Programming', 'John Smith')
+# person = Person.new('Alice', 25)
+# date = '2023-11-10'
+
+# person = Person.new('Alice', 25)
+# book = Book.new('Ruby Programming', 'John Smith')
+# date = '2023-11-10'
+
+# person.add_rental(book, date)
+
+# book.add_rental(person, date)
+
 # person = Person.new('Maximilianus', 22)
 # person.correct_name
 # capitalized_person = CapitalizeDecorator.new(person)
