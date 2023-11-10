@@ -1,4 +1,4 @@
-require_relative 'interfaces/nameable'
+require_relative '../interfaces/nameable'
 
 # Person class inheriting from Nameable
 class Person < Nameable

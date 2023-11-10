@@ -1,4 +1,4 @@
-require_relative 'interfaces/nameable'
+require_relative '../interfaces/nameable'
 
 # Base Decorator
 class BaseDecorator < Nameable
