@@ -1,9 +1,9 @@
+# lib/person.rb
 require_relative '../interfaces/nameable'
 
-# Person class inheriting from Nameable
 class Person < Nameable
-  attr_reader :id
-  attr_accessor :name, :age
+  attr_reader :id, :name, :age, :rentals
+  attr_accessor :parent_permission
 
   def initialize(age, name = 'Unknown', parent_permission: true)
     super()
@@ -11,6 +11,7 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
+    @rentals = []
   end
 
   def correct_name
