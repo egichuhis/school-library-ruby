@@ -37,6 +37,10 @@
 
 - **Add User Classes: Person, Teacher, Student**
 - **Decorate a class**
+- **Create a Classroom**
+- **Create a Student**
+- **Create a Book**
+- **Create a Rental**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
