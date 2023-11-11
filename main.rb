@@ -1,49 +1,84 @@
-# main.rb
-require_relative 'lib/person'
-require_relative 'lib/classroom'
-require_relative 'lib/student'
-require_relative 'lib/teacher'
-require_relative 'lib/book'
-require_relative 'lib/rental'
-require_relative 'decorators/base_decorator'
-require_relative 'decorators/capitalize_decorator'
-require_relative 'decorators/trimmer_decorator'
-require_relative 'interfaces/nameable'
+require_relative 'app'
 
-# Create a Classroom
-# classroom = Classroom.new('Math Class')
+def display_options
+  puts 'Options:'
+  puts '1. List all books'
+  puts '2. List all people'
+  puts '3. Create a person'
+  puts '4. Create a book'
+  puts '5. Create a rental'
+  puts '6. List rentals for a person'
+  puts '7. Quit'
+end
 
-# Create a Student and add it to the Classroom
-# student = Student.new(18, classroom, 'John Doe')
-# puts student.classroom.label # Should print 'Math Class'
+def handle_option(choice, app)
+  option_actions = {
+    1 => -> { app.list_all_books },
+    2 => -> { app.list_all_people },
+    3 => -> { create_person(app) },
+    4 => -> { create_book(app) },
+    5 => -> { create_rental(app) },
+    6 => -> { list_rentals_for_person(app) },
+    7 => -> { exit_app }
+  }
 
-# # Create a Book
-# book = Book.new('Ruby Programming', 'John Smith')
+  option_actions.fetch(choice, method(:handle_invalid_option)).call
+end
 
-# # Create a Person
-# person = Person.new('Alice', 25)
+def handle_invalid_option
+  puts 'Invalid option. Please choose a valid option.'
+end
 
-# # Create a Rental to associate the Person with the Book
-# rental = Rental.new('2023-11-10', book, person)
+def create_person(app)
+  print 'Enter person type (student/teacher): '
+  type = gets.chomp.downcase
+  print 'Enter name: '
+  name = gets.chomp
+  print 'Enter age: '
+  age = gets.chomp.to_i
+  app.create_person(type, name, age)
+end
 
-# puts book.rentals.length # Should print 1
-# puts person.rentals.length # Should print 1
+def create_book(app)
+  print 'Enter book title: '
+  title = gets.chomp
+  print 'Enter book author: '
+  author = gets.chomp
+  app.create_book(title, author)
+end
 
-# book = Book.new('Ruby Programming', 'John Smith')
-# person = Person.new('Alice', 25)
-# date = '2023-11-10'
+def create_rental(app)
+  print 'Enter person ID: '
+  person_id = gets.chomp.to_i
+  print 'Enter book ID: '
+  book_id = gets.chomp.to_i
+  print 'Enter rental date: '
+  date = gets.chomp
+  app.create_rental(person_id, book_id, date)
+end
 
-# person = Person.new('Alice', 25)
-# book = Book.new('Ruby Programming', 'John Smith')
-# date = '2023-11-10'
+def list_rentals_for_person(app)
+  print 'Enter person ID: '
+  person_id = gets.chomp.to_i
+  app.list_rentals_for_person(person_id)
+end
 
-# person.add_rental(book, date)
+def exit_app
+  puts 'Exiting the app. Goodbye!'
+  exit
+end
 
-# book.add_rental(person, date)
+def main
+  app = App.new
 
-# person = Person.new('Maximilianus', 22)
-# person.correct_name
-# capitalized_person = CapitalizeDecorator.new(person)
-# puts capitalized_person.correct_name
-# capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
-# puts capitalized_trimmed_person.correct_name
+  loop do
+    display_options
+    print 'Choose an option: '
+    choice = gets.chomp.to_i
+    handle_option(choice, app)
+    puts "\n"
+  end
+end
+
+# Run the main method if this file is being executed
+main if __FILE__ == $PROGRAM_NAME
