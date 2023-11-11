@@ -65,7 +65,13 @@ end
 def get_parent_permission(age)
   if age < 18
     print 'Has parent permission? [Y/N]: '
-    gets.chomp.downcase == 'y'
+    choice = gets.chomp.downcase
+    if choice == 'y'
+      false
+    else
+      puts 'You do not have permission to continue. Exiting the program.'
+      exit
+    end
   else
     true
   end
