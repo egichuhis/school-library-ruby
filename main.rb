@@ -31,30 +31,43 @@ def handle_invalid_option
 end
 
 def create_person(app)
-  print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
-  type = gets.chomp
-  print 'Name: '
-  name = gets.chomp
-  print 'Age: '
-  age = gets.chomp.to_i
+  type = select_person_type
+  name = get_user_input('Name: ')
+  age = get_user_input('Age: ').to_i
 
   if type == '1'
-    if age < 18
-      print 'Has parent permission? [Y/N]: '
-      parent_permission = gets.chomp.downcase
-      if parent_permission == 'y'
-        app.create_person(type, name, age, parent_permission)
-      else
-        puts 'You are not allowed to continue.'
-        exit
-      end
-    else
-      app.create_person(type, name, age, true)
-    end
+    create_student(app, name, age)
   else
-    print 'Specialization: '
-    specialization = gets.chomp
-    app.create_person(type, name, age, true, specialization)
+    create_teacher(app, name, age)
+  end
+end
+
+def select_person_type
+  print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+  gets.chomp
+end
+
+def get_user_input(prompt)
+  print prompt
+  gets.chomp
+end
+
+def create_student(app, name, age)
+  get_parent_permission(age)
+  app.create_person('1', name, age)
+end
+
+def create_teacher(app, name, age)
+  specialization = get_user_input('Specialization: ')
+  app.create_person('2', name, age, specialization: specialization)
+end
+
+def get_parent_permission(age)
+  if age < 18
+    print 'Has parent permission? [Y/N]: '
+    gets.chomp.downcase == 'y'
+  else
+    true
   end
 end
 
