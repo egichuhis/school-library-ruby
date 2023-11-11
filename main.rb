@@ -1,49 +1,120 @@
 # main.rb
-require_relative 'lib/person'
-require_relative 'lib/classroom'
-require_relative 'lib/student'
-require_relative 'lib/teacher'
-require_relative 'lib/book'
-require_relative 'lib/rental'
-require_relative 'decorators/base_decorator'
-require_relative 'decorators/capitalize_decorator'
-require_relative 'decorators/trimmer_decorator'
-require_relative 'interfaces/nameable'
+require_relative 'app'
 
-# Create a Classroom
-# classroom = Classroom.new('Math Class')
+def display_options
+  puts 'Please choose an option by entering a number:'
+  puts '1 - List all books'
+  puts '2 - List all people'
+  puts '3 - Create a person'
+  puts '4 - Create a book'
+  puts '5 - Create a rental'
+  puts '6 - List all rentals for a given person id'
+  puts '7 - Exit'
+end
 
-# Create a Student and add it to the Classroom
-# student = Student.new(18, classroom, 'John Doe')
-# puts student.classroom.label # Should print 'Math Class'
+def handle_option(choice, app)
+  option_actions = {
+    1 => -> { app.list_all_books },
+    2 => -> { app.list_all_people },
+    3 => -> { create_person(app) },
+    4 => -> { create_book(app) },
+    5 => -> { create_rental(app) },
+    6 => -> { list_rentals_for_person(app) },
+    7 => -> { exit_app }
+  }
 
-# # Create a Book
-# book = Book.new('Ruby Programming', 'John Smith')
+  option_actions.fetch(choice, method(:handle_invalid_option)).call
+end
 
-# # Create a Person
-# person = Person.new('Alice', 25)
+def handle_invalid_option
+  puts 'Invalid option. Please choose a valid option.'
+end
 
-# # Create a Rental to associate the Person with the Book
-# rental = Rental.new('2023-11-10', book, person)
+def create_person(app)
+  type = select_person_type
+  name = get_user_input('Name: ')
+  age = get_user_input('Age: ').to_i
 
-# puts book.rentals.length # Should print 1
-# puts person.rentals.length # Should print 1
+  if type == '1'
+    create_student(app, name, age)
+  else
+    create_teacher(app, name, age)
+  end
+end
 
-# book = Book.new('Ruby Programming', 'John Smith')
-# person = Person.new('Alice', 25)
-# date = '2023-11-10'
+def select_person_type
+  print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+  gets.chomp
+end
 
-# person = Person.new('Alice', 25)
-# book = Book.new('Ruby Programming', 'John Smith')
-# date = '2023-11-10'
+def get_user_input(prompt)
+  print prompt
+  gets.chomp
+end
 
-# person.add_rental(book, date)
+def create_student(app, name, age)
+  get_parent_permission(age)
+  app.create_person('1', name, age)
+end
 
-# book.add_rental(person, date)
+def create_teacher(app, name, age)
+  specialization = get_user_input('Specialization: ')
+  app.create_person('2', name, age, specialization: specialization)
+end
 
-# person = Person.new('Maximilianus', 22)
-# person.correct_name
-# capitalized_person = CapitalizeDecorator.new(person)
-# puts capitalized_person.correct_name
-# capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
-# puts capitalized_trimmed_person.correct_name
+def get_parent_permission(age)
+  if age < 18
+    print 'Has parent permission? [Y/N]: '
+    choice = gets.chomp.downcase
+    if choice == 'y'
+      false
+    else
+      puts 'You do not have permission to continue. Exiting the program.'
+      exit
+    end
+  else
+    true
+  end
+end
+
+def create_book(app)
+  print 'Book Title: '
+  title = gets.chomp
+  print 'Book Author: '
+  author = gets.chomp
+  app.create_book(title, author)
+end
+
+def create_rental(app)
+  _, person_id = app.select_person
+  _, book_id = app.select_book
+  print 'Enter rental date: '
+  date = gets.chomp
+  app.create_rental(person_id, book_id, date)
+end
+
+def list_rentals_for_person(app)
+  print 'Enter person ID: '
+  person_id = gets.chomp.to_i
+  app.list_rentals_for_person(person_id)
+end
+
+def exit_app
+  puts 'Exiting the app. Goodbye!'
+  exit
+end
+
+def main
+  app = App.new
+
+  loop do
+    display_options
+    print 'Choose an option: '
+    choice = gets.chomp.to_i
+    handle_option(choice, app)
+    puts "\n"
+  end
+end
+
+# Run the main method if this file is being executed
+main if __FILE__ == $PROGRAM_NAME
