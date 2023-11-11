@@ -1,4 +1,4 @@
-#main.rb
+# main.rb
 require_relative 'app'
 
 def display_options

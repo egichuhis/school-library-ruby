@@ -1,4 +1,4 @@
-#person.rb
+# person.rb
 require_relative '../interfaces/nameable'
 require_relative 'rental'
 

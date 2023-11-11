@@ -26,7 +26,7 @@ class App
     puts 'All People:'
     @people.each do |person|
       if person.is_a?(Teacher)
-        puts "[#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}, Specialization: #{person.specialization}"
+        puts "[#{person.class.name}] Name: #{person.age}, ID: #{person.id}, Age: #{person.specialization}, Specialization: #{person.name}"
       else
         puts "[#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
       end
@@ -36,13 +36,13 @@ class App
   def create_person(type, name, age, parent_permission = false, specialization = nil)
   if type == '1'
     @people << Student.new(age, name, parent_permission: parent_permission)
-    puts "Name #{name}"
-    puts "Age #{age}"
+    puts "Name: #{name}"
+    puts "Age: #{age}"
     puts "Student created successfully."
   elsif type == '2'
-    @people << Teacher.new(age, name, specialization)
-    puts "Name #{name}"
-    puts "Age #{age}"
+    @people << Teacher.new(name, age, specialization)
+    puts "Name: #{name}"
+    puts "Age: #{age}"
     puts "Specialization #{specialization}"
     puts "Teacher created successfully."
   else
