@@ -1,4 +1,4 @@
-#app.rb
+# app.rb
 require_relative 'lib/person'
 require_relative 'lib/student'
 require_relative 'lib/teacher'
@@ -10,9 +10,9 @@ class App
     @people = []
     @books = []
     @rentals = []
-    puts "-----------------------------------"
-    puts "** Welcome to School Library App **"
-    puts "-----------------------------------"
+    puts '-----------------------------------'
+    puts '** Welcome to School Library App **'
+    puts '-----------------------------------'
   end
 
   def list_all_books
@@ -34,27 +34,27 @@ class App
   end
 
   def create_person(type, name, age, parent_permission = false, specialization = nil)
-  if type == '1'
-    @people << Student.new(age, name, parent_permission: parent_permission)
-    puts "Name: #{name}"
-    puts "Age: #{age}"
-    puts "Student created successfully."
-  elsif type == '2'
-    @people << Teacher.new(name, age, specialization)
-    puts "Name: #{name}"
-    puts "Age: #{age}"
-    puts "Specialization #{specialization}"
-    puts "Teacher created successfully."
-  else
-    puts "Invalid person type. Please choose '1' for Student or '2' for Teacher."
+    if type == '1'
+      @people << Student.new(age, name, parent_permission: parent_permission)
+      puts "Name: #{name}"
+      puts "Age: #{age}"
+      puts 'Student created successfully.'
+    elsif type == '2'
+      @people << Teacher.new(name, age, specialization)
+      puts "Name: #{name}"
+      puts "Age: #{age}"
+      puts "Specialization #{specialization}"
+      puts 'Teacher created successfully.'
+    else
+      puts "Invalid person type. Please choose '1' for Student or '2' for Teacher."
+    end
   end
-end
 
   def create_book(title, author)
     @books << Book.new(title, author)
     puts "Title: #{title}"
     puts "Author: #{author}"
-    puts "Book created successfully."
+    puts 'Book created successfully.'
   end
 
   def create_rental(person_id, book_id, date)
@@ -72,19 +72,25 @@ end
   def select_book
     puts 'Select a book from the following list by number:'
     @books.each_with_index do |book, index|
-      puts "#{index}) Title: #{book.title}, Author: #{book.author}"
+      puts "#{index + 1}) Title: #{book.title}, Author: #{book.author}"
     end
     print 'Enter the number of the selected book: '
-    gets.chomp.to_i
+    selected_index = gets.chomp.to_i - 1
+    selected_book = @books[selected_index]
+
+    [selected_index, selected_book.id]
   end
 
   def select_person
     puts 'Select a person from the following list by number (not ID):'
     @people.each_with_index do |person, index|
-      puts "#{index}) [#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts "#{index + 1}) [#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
     print 'Enter the number of the selected person: '
-    gets.chomp.to_i
+    person_index = gets.chomp.to_i - 1
+    selected_person = @people[person_index]
+
+    [person_index, selected_person.id]
   end
 
   def list_rentals_for_person(person_id)

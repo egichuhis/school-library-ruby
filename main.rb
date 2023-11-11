@@ -67,11 +67,11 @@ def create_book(app)
 end
 
 def create_rental(app)
-  book_index = app.select_book
-  person_index = app.select_person
+  _, person_id = app.select_person
+  _, book_id = app.select_book
   print 'Enter rental date: '
   date = gets.chomp
-  app.create_rental(person_index, book_index, date)
+  app.create_rental(person_id, book_id, date)
 end
 
 def list_rentals_for_person(app)
