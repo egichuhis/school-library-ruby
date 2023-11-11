@@ -1,14 +1,15 @@
+#main.rb
 require_relative 'app'
 
 def display_options
-  puts 'Options:'
-  puts '1. List all books'
-  puts '2. List all people'
-  puts '3. Create a person'
-  puts '4. Create a book'
-  puts '5. Create a rental'
-  puts '6. List rentals for a person'
-  puts '7. Quit'
+  puts 'Please choose an option by entering a number:'
+  puts '1 - List all books'
+  puts '2 - List all people'
+  puts '3 - Create a person'
+  puts '4 - Create a book'
+  puts '5 - Create a rental'
+  puts '6 - List all rentals for a given person id'
+  puts '7 - Exit'
 end
 
 def handle_option(choice, app)
@@ -30,31 +31,47 @@ def handle_invalid_option
 end
 
 def create_person(app)
-  print 'Enter person type (student/teacher): '
-  type = gets.chomp.downcase
-  print 'Enter name: '
+  print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+  type = gets.chomp
+  print 'Name: '
   name = gets.chomp
-  print 'Enter age: '
+  print 'Age: '
   age = gets.chomp.to_i
-  app.create_person(type, name, age)
+
+  if type == '1'
+    if age < 18
+      print 'Has parent permission? [Y/N]: '
+      parent_permission = gets.chomp.downcase
+      if parent_permission == 'y'
+        app.create_person(type, name, age, parent_permission)
+      else
+        puts 'You are not allowed to continue.'
+        exit
+      end
+    else
+      app.create_person(type, name, age, true)
+    end
+  else
+    print 'Specialization: '
+    specialization = gets.chomp
+    app.create_person(type, name, age, true, specialization)
+  end
 end
 
 def create_book(app)
-  print 'Enter book title: '
+  print 'Book Title: '
   title = gets.chomp
-  print 'Enter book author: '
+  print 'Book Author: '
   author = gets.chomp
   app.create_book(title, author)
 end
 
 def create_rental(app)
-  print 'Enter person ID: '
-  person_id = gets.chomp.to_i
-  print 'Enter book ID: '
-  book_id = gets.chomp.to_i
+  book_index = app.select_book
+  person_index = app.select_person
   print 'Enter rental date: '
   date = gets.chomp
-  app.create_rental(person_id, book_id, date)
+  app.create_rental(person_index, book_index, date)
 end
 
 def list_rentals_for_person(app)
