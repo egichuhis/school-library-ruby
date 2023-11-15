@@ -15,8 +15,6 @@ class App
     puts '-----------------------------------'
   end
 
-  public
-
   def list_all_books
     puts 'All Books:'
     @books.each do |book|
@@ -69,7 +67,7 @@ class App
     author = get_user_input('Enter book author: ').chomp
     create_book_with_params(title, author)
   end
-  
+
   def create_book_with_params(title, author)
     @books << Book.new(title, author)
     puts "Book created successfully. Title: #{title}, Author: #{author}"
@@ -141,25 +139,25 @@ class App
     option_actions = {
       1 => -> { list_all_books },
       2 => -> { list_all_people },
-      3 => -> {
+      3 => lambda {
         type = select_person_type.chomp
         name = get_user_input('Name: ').chomp
         age = get_user_input('Age: ').chomp.to_i
-        if type == '1' || type == '2'
+        if %w[1 2].include?(type)
           create_person(type, name, age)
         else
           puts 'Invalid person type. Please choose either 1 (Student) or 2 (Teacher).'
         end
       },
       4 => -> { create_book },
-      5 => -> {
+      5 => lambda {
         _, person_id = select_person
         _, book_id = select_book
         print 'Enter rental date: '
         date = gets.chomp
         create_rental(person_id, book_id, date)
       },
-      6 => -> {
+      6 => lambda {
         print 'Enter person ID: '
         person_id = gets.chomp.to_i
         list_rentals_for_person(person_id)
