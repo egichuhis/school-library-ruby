@@ -15,6 +15,8 @@ class App
     puts '-----------------------------------'
   end
 
+  public
+
   def list_all_books
     puts 'All Books:'
     @books.each do |book|
@@ -36,26 +38,41 @@ class App
 
   def create_person(type, name, age, parent_permission: false, specialization: nil)
     if type == '1'
+      if age < 18
+        print 'Does the student have parent permission? (yes/no): '
+        parent_permission = gets.chomp.downcase == 'yes'
+      end
       @people << Student.new(age, name, parent_permission: parent_permission)
       puts "Name: #{name}"
       puts "Age: #{age}"
       puts 'Student created successfully.'
     elsif type == '2'
+      if age >= 18
+        print 'Enter teacher specialization: '
+        specialization = gets.chomp
+      else
+        puts 'Teachers must be 18 or older.'
+        return
+      end
       @people << Teacher.new(age, name, parent_permission: true, specialization: specialization)
       puts "Name: #{name}"
       puts "Age: #{age}"
-      puts "Specialization #{specialization}"
+      puts "Specialization: #{specialization}"
       puts 'Teacher created successfully.'
     else
       puts "Invalid person type. Please choose '1' for Student or '2' for Teacher."
     end
   end
 
-  def create_book(title, author)
+  def create_book
+    title = get_user_input('Enter book title: ').chomp
+    author = get_user_input('Enter book author: ').chomp
+    create_book_with_params(title, author)
+  end
+  
+  def create_book_with_params(title, author)
     @books << Book.new(title, author)
-    puts "Title: #{title}"
-    puts "Author: #{author}"
-    puts 'Book created successfully.'
+    puts "Book created successfully. Title: #{title}, Author: #{author}"
   end
 
   def create_rental(person_id, book_id, date)
@@ -108,6 +125,70 @@ class App
     end
   end
 
+  def select_person_type
+    puts 'Select person type:'
+    puts '1) Student'
+    puts '2) Teacher'
+    print 'Enter the number of the selected person type: '
+    gets.chomp
+  end
+
+  def handle_invalid_option
+    puts 'Invalid option. Please choose a valid option.'
+  end
+
+  def handle_option(choice)
+    option_actions = {
+      1 => -> { list_all_books },
+      2 => -> { list_all_people },
+      3 => -> {
+        type = select_person_type.chomp
+        name = get_user_input('Name: ').chomp
+        age = get_user_input('Age: ').chomp.to_i
+        if type == '1' || type == '2'
+          create_person(type, name, age)
+        else
+          puts 'Invalid person type. Please choose either 1 (Student) or 2 (Teacher).'
+        end
+      },
+      4 => -> { create_book },
+      5 => -> {
+        _, person_id = select_person
+        _, book_id = select_book
+        print 'Enter rental date: '
+        date = gets.chomp
+        create_rental(person_id, book_id, date)
+      },
+      6 => -> {
+        print 'Enter person ID: '
+        person_id = gets.chomp.to_i
+        list_rentals_for_person(person_id)
+      },
+      7 => -> { exit_app }
+    }
+
+    if option_actions.key?(choice)
+      option_actions[choice].call
+    else
+      handle_invalid_option
+    end
+  end
+
+  def main_loop
+    loop do
+      display_options
+      print 'Choose an option: '
+      choice = gets.chomp.to_i
+      handle_option(choice)
+      puts "\n"
+    end
+  end
+
+  def exit_app
+    puts 'Exiting the app. Goodbye!'
+    exit
+  end
+
   private
 
   def find_person_by_id(id)
@@ -116,5 +197,10 @@ class App
 
   def find_book_by_id(id)
     @books.find { |book| book.id == id }
+  end
+
+  def get_user_input(prompt)
+    print prompt
+    gets.chomp
   end
 end
