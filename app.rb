@@ -19,7 +19,7 @@ class App
     @people = []
     @books = []
     @rentals = []
-    # @dataManager.load_data
+    @dataManager.load_data
     display_welcome_message
   end
 

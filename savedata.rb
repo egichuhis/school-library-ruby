@@ -14,8 +14,8 @@ class StoringData
     rentals_data = JSON.parse(File.read('rentals.json'))
 
     # Assuming people, books, and rentals are serialized JSON strings
-    people = people_data['people'].map { |person_data| Person.from_json(person_data) }
-    books = books_data['books'].map { |_books_data| Book.from_json(book_data) }
+    people = people_data['people'].map { |person_data| Person.from_json(person_data, @app.books) }
+    books = books_data['books'].map { |book_data| Book.from_json(book_data) }
     rentals = rentals_data['rentals'].map { |rentals_data| Rental.from_json(rentals_data) }
 
     # Set rentals for each book
