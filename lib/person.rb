@@ -1,6 +1,7 @@
 # person.rb
 require_relative '../interfaces/nameable'
 require_relative 'rental'
+require 'json'
 
 class Person < Nameable
   attr_reader :id, :name, :age, :rentals
@@ -25,6 +26,32 @@ class Person < Nameable
 
   def add_rental(book, date)
     Rental.new(date, book, self)
+  end
+
+  def to_json(options = {})
+    {
+      id: @id,
+      name: @name,
+      age: @age,
+      parent_permission: @parent_permission,
+      rentals: @rentals.map { |rental| rental.id }
+    }.to_json(options)
+  end
+
+  def self.from_json(json, books)
+    data = JSON.parse(json)
+    date = data['date']
+    book_id = data['book_id']
+    book = Book.find_by_id(book_id, books)
+    person = Person.from_json(data['person'])
+    Rental.new(date, book, person)
+  rescue StandardError => e
+    puts "Error parsing Rental JSON: #{json}"
+    raise e
+  end
+
+  def to_s
+    "Person(id: #{@id}, name: #{@name}, age: #{@age}, parent_permission: #{@parent_permission}, rentals: #{@rentals})"
   end
 
   private
