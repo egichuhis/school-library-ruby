@@ -28,7 +28,7 @@ class Student < Person
       age: @age,
       parent_permission: @parent_permission,
       classroom: @classroom&.id,
-      rentals: @rentals.map { |rental| rental.id }
+      rentals: @rentals.map(&:id)
     }.to_json(options)
   end
 

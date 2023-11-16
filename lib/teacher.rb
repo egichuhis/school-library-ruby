@@ -21,7 +21,7 @@ class Teacher < Person
       age: @age,
       parent_permission: @parent_permission,
       specialization: @specialization,
-      rentals: @rentals.map { |rental| rental.id }
+      rentals: @rentals.map(&:id)
     }.to_json(options)
   end
 

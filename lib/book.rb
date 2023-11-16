@@ -23,7 +23,7 @@ class Book
       id: @id,
       title: @title,
       author: @author,
-      rentals: @rentals.map { |rental| rental.id }
+      rentals: @rentals.map(&:id)
     }.to_json(options)
   end
 

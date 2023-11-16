@@ -9,12 +9,14 @@ class StoringData
   end
 
   def load_data
-    data = JSON.parse(File.read('data.json'))
+    people_data = JSON.parse(File.read('people.json'))
+    books_data = JSON.parse(File.read('books.json'))
+    rentals_data = JSON.parse(File.read('rentals.json'))
 
     # Assuming people, books, and rentals are serialized JSON strings
-    people = data['people'].map { |person_data| Person.from_json(person_data) }
-    books = data['books'].map { |book_data| Book.from_json(book_data) }
-    rentals = data['rentals'].map { |rental_data| Rental.from_json(rental_data, books) }
+    people = people_data['people'].map { |person_data| Person.from_json(person_data) }
+    books = books_data['books'].map { |_books_data| Book.from_json(book_data) }
+    rentals = rentals_data['rentals'].map { |rentals_data| Rental.from_json(rentals_data) }
 
     # Set rentals for each book
     rentals.each do |rental|
@@ -28,11 +30,20 @@ class StoringData
   end
 
   def save_data
-    data = {
-      people: @app.people.map(&:to_json),
-      books: @app.books.map(&:to_json),
+    people_data = {
+      people: @app.people.map(&:to_json)
+    }
+
+    books_data = {
+      books: @app.books.map(&:to_json)
+    }
+
+    rentals_data = {
       rentals: @app.rentals.map(&:to_json)
     }
-    File.write('data.json', JSON.pretty_generate(data))
+
+    File.write('people.json', JSON.pretty_generate(people_data))
+    File.write('books.json', JSON.pretty_generate(books_data))
+    File.write('rentals.json', JSON.pretty_generate(rentals_data))
   end
 end
