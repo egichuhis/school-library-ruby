@@ -1,5 +1,6 @@
 {
   "people": [
-    "{\"id\":282,\"name\":\"Wendy\",\"age\":33,\"parent_permission\":true,\"specialization\":null,\"rentals\":[]}"
+    "{\"id\":207,\"name\":\"Edd\",\"age\":33,\"parent_permission\":false,\"classroom\":null,\"rentals\":[60]}",
+    "{\"id\":269,\"name\":\"One Person\",\"age\":45,\"parent_permission\":false,\"classroom\":null,\"rentals\":[60]}"
   ]
 }

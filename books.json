@@ -1,5 +1,6 @@
 {
   "books": [
-    "{\"id\":762,\"title\":\"Frenziee\",\"author\":\"Dennis\",\"rentals\":[]}"
+    "{\"id\":579,\"title\":\"Err\",\"author\":\"Dee\",\"rentals\":[60]}",
+    "{\"id\":157,\"title\":\"Book One\",\"author\":\"Rowlingd\",\"rentals\":[60]}"
   ]
 }
