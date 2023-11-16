@@ -35,6 +35,7 @@ class Teacher < Person
   end
 
   def to_s
-    "Teacher(id: #{@id}, name: #{@name}, age: #{@age}, parent_permission: #{@parent_permission}, specialization: #{@specialization}, rentals: #{@rentals})"
+    "Teacher(id: #{@id}, name: #{@name}, age: #{@age}, " \
+      "parent_permission: #{@parent_permission}, specialization: #{@specialization}, rentals: #{@rentals})"
   end
 end

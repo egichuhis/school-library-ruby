@@ -42,6 +42,7 @@ class Student < Person
   end
 
   def to_s
-    "Student(id: #{@id}, name: #{@name}, age: #{@age}, parent_permission: #{@parent_permission}, classroom: #{@classroom}, rentals: #{@rentals})"
+    "Student(id: #{@id}, name: #{@name}, age: #{@age}, " \
+      "parent_permission: #{@parent_permission}, classroom: #{@classroom}, rentals: #{@rentals})"
   end
 end

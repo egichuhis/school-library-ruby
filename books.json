@@ -4,6 +4,9 @@
     "{\"id\":157,\"title\":\"Book One\",\"author\":\"Rowlingd\",\"rentals\":[60]}",
     "{\"id\":579,\"title\":\"Err\",\"author\":\"Dee\",\"rentals\":[]}",
     "{\"id\":39,\"title\":\"Ready Kazi\",\"author\":\"Paka Pawa\",\"rentals\":[80]}",
-    "{\"id\":930,\"title\":\"James Journy\",\"author\":\"Kyle Teller\",\"rentals\":[]}"
+    "{\"id\":930,\"title\":\"James Journy\",\"author\":\"Kyle Teller\",\"rentals\":[]}",
+    "{\"id\":157,\"title\":\"Book One\",\"author\":\"Rowlingd\",\"rentals\":[]}",
+    "{\"id\":39,\"title\":\"Ready Kazi\",\"author\":\"Paka Pawa\",\"rentals\":[]}",
+    "{\"id\":382,\"title\":\"LLLL\",\"author\":\"KKK\",\"rentals\":[]}"
   ]
 }
