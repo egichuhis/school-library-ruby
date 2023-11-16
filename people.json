@@ -1,6 +1,10 @@
 {
   "people": [
     "{\"id\":207,\"name\":\"Edd\",\"age\":33,\"parent_permission\":false,\"classroom\":null,\"rentals\":[60]}",
-    "{\"id\":269,\"name\":\"One Person\",\"age\":45,\"parent_permission\":false,\"classroom\":null,\"rentals\":[60]}"
+    "{\"id\":269,\"name\":\"One Person\",\"age\":45,\"parent_permission\":false,\"classroom\":null,\"rentals\":[60]}",
+    "{\"id\":207,\"name\":\"Edd\",\"age\":33,\"parent_permission\":false,\"rentals\":[]}",
+    "{\"id\":269,\"name\":\"One Person\",\"age\":45,\"parent_permission\":false,\"rentals\":[]}",
+    "{\"id\":218,\"name\":\"Wendy Kimani\",\"age\":34,\"parent_permission\":false,\"classroom\":null,\"rentals\":[60,80]}",
+    "{\"id\":625,\"name\":\"Dennis Kiama\",\"age\":44,\"parent_permission\":true,\"specialization\":null,\"rentals\":[]}"
   ]
 }

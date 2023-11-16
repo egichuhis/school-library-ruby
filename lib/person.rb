@@ -38,15 +38,27 @@ class Person < Nameable
     }.to_json(options)
   end
 
-  def self.from_json(json, books)
+  def self.from_json(json, books, people)
     data = JSON.parse(json)
-    date = data['date']
-    book_id = data['book_id']
-    book = Book.find_by_id(book_id, books)
-    person = Person.from_json(data['person'])
-    Rental.new(date, book, person)
+    # Extract relevant data from JSON
+    id = data['id']
+    name = data['name']
+    age = data['age']
+    parent_permission = data['parent_permission']
+
+    # Create a new Person instance
+    person = Person.new(age, name, parent_permission: parent_permission)
+    person.instance_variable_set(:@id, id) # Set the ID manually
+
+    # If there are rentals in the data, add them to the person's rentals array
+    data['rentals']&.each do |rental_id|
+      rental = Rental.find_by_id(rental_id, books, people)
+      person.rentals << rental if rental
+    end
+
+    person
   rescue StandardError => e
-    puts "Error parsing Rental JSON: #{json}"
+    puts "Error parsing Person JSON: #{json}"
     raise e
   end
 

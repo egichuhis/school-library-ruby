@@ -15,11 +15,11 @@ class App
   attr_accessor :people, :books, :rentals
 
   def initialize
-    @dataManager = StoringData.new(self)
+    @data_manager = StoringData.new(self)
     @people = []
     @books = []
     @rentals = []
-    @dataManager.load_data
+    @data_manager.load_data
     display_welcome_message
   end
 
@@ -143,7 +143,7 @@ class App
   end
 
   def exit_app
-    @dataManager.save_data
+    @data_manager.save_data
     puts 'Exiting the app. Goodbye!'
     exit
   end
