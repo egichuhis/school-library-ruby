@@ -1,4 +1,4 @@
-#classrom.rb
+# classrom.rb
 
 class Classroom
   attr_accessor :label
