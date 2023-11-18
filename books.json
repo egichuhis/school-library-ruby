@@ -1,6 +1,7 @@
 {
   "books": [
     "{\"id\":579,\"title\":\"Err\",\"author\":\"Dee\",\"rentals\":[60,60]}",
-    "{\"id\":958,\"title\":\"The Money Hesit\",\"author\":\"Garang JR\",\"rentals\":[80,80,100]}"
+    "{\"id\":958,\"title\":\"The Money Hesit\",\"author\":\"Garang JR\",\"rentals\":[80,100,120,80,100,120]}",
+    "{\"id\":18,\"title\":\"Frankestein\",\"author\":\"Julius Ceasar\",\"rentals\":[]}"
   ]
 }
