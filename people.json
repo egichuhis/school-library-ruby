@@ -1,6 +1,7 @@
 {
   "people": [
     "{\"id\":207,\"name\":\"Edd\",\"age\":33,\"parent_permission\":false,\"rentals\":[60]}",
-    "{\"id\":150,\"name\":\"Dennis Kiongo\",\"age\":45,\"parent_permission\":false,\"rentals\":[]}"
+    "{\"id\":150,\"name\":\"Dennis Kiongo\",\"age\":45,\"parent_permission\":false,\"rentals\":[80]}",
+    "{\"id\":537,\"name\":\"Wesonga\",\"age\":33,\"parent_permission\":true,\"specialization\":null,\"rentals\":[100]}"
   ]
 }

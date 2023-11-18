@@ -101,8 +101,9 @@ class StoringData
 
   def save_rentals
     existing_rentals_data = File.exist?('rentals.json') ? JSON.parse(File.read('rentals.json'))['rentals'] : []
-    new_rentals_data = @app.rentals.map(&:to_json)
+    new_rentals_data = @app.rentals.map(&:to_json) # Change here
+
     combined_rentals_data = (existing_rentals_data + new_rentals_data).uniq
-    File.write('rentals.json', JSON.pretty_generate(rentals: combined_rentals_data.map(&:to_json)))
+    File.write('rentals.json', JSON.pretty_generate(rentals: combined_rentals_data))
   end
 end
