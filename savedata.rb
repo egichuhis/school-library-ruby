@@ -57,14 +57,44 @@ class StoringData
 
   def save_people
     existing_people_data = File.exist?('people.json') ? JSON.parse(File.read('people.json'))['people'] : []
-    new_people_data = @app.people.map(&:to_json)
+
+    # Identify and update existing entries
+    existing_people_data.map! do |existing_person_data|
+      existing_person = Person.from_json(existing_person_data, @app.books, @app.people)
+      updated_person = @app.people.find { |p| p.id == existing_person.id }
+
+      if updated_person
+        updated_person.to_json
+      else
+        existing_person_data
+      end
+    end
+
+    # Add new entries
+    new_people_data = @app.people.reject { |p| existing_people_data.include?(p.to_json) }.map(&:to_json)
+
     combined_people_data = (existing_people_data + new_people_data).uniq
     File.write('people.json', JSON.pretty_generate(people: combined_people_data))
   end
 
   def save_books
     existing_books_data = File.exist?('books.json') ? JSON.parse(File.read('books.json'))['books'] : []
-    new_books_data = @app.books.map(&:to_json)
+
+    # Identify and update existing entries
+    existing_books_data.map! do |existing_book_data|
+      existing_book = Book.from_json(existing_book_data)
+      updated_book = @app.books.find { |b| b.id == existing_book.id }
+
+      if updated_book
+        updated_book.to_json
+      else
+        existing_book_data
+      end
+    end
+
+    # Add new entries
+    new_books_data = @app.books.reject { |b| existing_books_data.include?(b.to_json) }.map(&:to_json)
+
     combined_books_data = (existing_books_data + new_books_data).uniq
     File.write('books.json', JSON.pretty_generate(books: combined_books_data))
   end
