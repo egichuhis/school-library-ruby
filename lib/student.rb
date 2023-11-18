@@ -20,4 +20,29 @@ class Student < Person
   def play_hooky
     '¯\\(ツ)/¯'
   end
+
+  def to_json(options = {})
+    {
+      id: @id,
+      name: @name,
+      age: @age,
+      parent_permission: @parent_permission,
+      classroom: @classroom&.id,
+      rentals: @rentals.map(&:id)
+    }.to_json(options)
+  end
+
+  def self.from_json(json)
+    data = JSON.parse(json)
+    student = new(data['age'], data['name'], parent_permission: data['parent_permission'])
+    student.instance_variable_set(:@id, data['id'])
+    student.instance_variable_set(:@classroom, Classroom.from_json(data['classroom'])) if data['classroom']
+    # No need to deserialize rentals here, as it's done in the StoringData class
+    student
+  end
+
+  def to_s
+    "Student(id: #{@id}, name: #{@name}, age: #{@age}, " \
+      "parent_permission: #{@parent_permission}, classroom: #{@classroom}, rentals: #{@rentals})"
+  end
 end

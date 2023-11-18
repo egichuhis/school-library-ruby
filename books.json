@@ -1,0 +1,6 @@
+{
+  "books": [
+    "{\"id\":579,\"title\":\"Err\",\"author\":\"Dee\",\"rentals\":[60,60]}",
+    "{\"id\":958,\"title\":\"The Money Hesit\",\"author\":\"Garang JR\",\"rentals\":[80,80,100]}"
+  ]
+}

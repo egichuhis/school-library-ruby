@@ -6,15 +6,20 @@ require_relative 'lib/book'
 require_relative 'lib/rental'
 require_relative 'lib/ui'
 require_relative 'lib/list'
+require_relative 'savedata'
 
 class App
   include UI
   include List
 
+  attr_accessor :people, :books, :rentals
+
   def initialize
+    @data_manager = StoringData.new(self)
     @people = []
     @books = []
     @rentals = []
+    @data_manager.load_data
     display_welcome_message
   end
 
@@ -138,6 +143,7 @@ class App
   end
 
   def exit_app
+    @data_manager.save_data
     puts 'Exiting the app. Goodbye!'
     exit
   end
